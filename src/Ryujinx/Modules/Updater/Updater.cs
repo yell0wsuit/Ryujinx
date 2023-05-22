@@ -89,7 +89,6 @@ namespace Ryujinx.Modules
 
             Version newVersion;
             Version currentVersion;
-            Version changelog;
 
             try
             {
@@ -178,18 +177,6 @@ namespace Ryujinx.Modules
                 return;
             }
 
-            // Get changelog
-            try
-            {
-                changelog = Version.Parse(_buildChangelog);
-            }
-            catch
-            {
-                Logger.Error?.Print(LogClass.Application, "Failed to get the changelog for the latest release.");
-
-                return;
-            }
-
             // Fetch build size information to learn chunk sizes.
             using (HttpClient buildSizeClient = ConstructHttpClient())
             {
@@ -211,7 +198,7 @@ namespace Ryujinx.Modules
             }
 
             // Show a message asking the user if they want to update
-            UpdateDialog updateDialog = new UpdateDialog(mainWindow, newVersion, changelog, _buildUrl);
+            UpdateDialog updateDialog = new UpdateDialog(mainWindow, newVersion, _buildUrl, _buildChangelog);
             updateDialog.Show();
         }
 

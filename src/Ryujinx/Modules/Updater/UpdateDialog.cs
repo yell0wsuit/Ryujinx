@@ -23,21 +23,23 @@ namespace Ryujinx.Modules
         private readonly MainWindow _mainWindow;
         private readonly string     _buildUrl;
         private          bool       _restartQuery;
+        private readonly string     _buildChangelog;
 
-        public UpdateDialog(MainWindow mainWindow, Version newVersion, Version changelog, string buildUrl) : this(new Builder("Ryujinx.Modules.Updater.UpdateDialog.glade"), mainWindow, newVersion, changelog, buildUrl) { }
+        public UpdateDialog(MainWindow mainWindow, Version newVersion, string buildUrl, string buildChangelog) : this(new Builder("Ryujinx.Modules.Updater.UpdateDialog.glade"), mainWindow, newVersion, buildUrl, buildChangelog) { }
 
-        private UpdateDialog(Builder builder, MainWindow mainWindow, Version newVersion, Version changelog, string buildUrl) : base(builder.GetRawOwnedObject("UpdateDialog"))
+        private UpdateDialog(Builder builder, MainWindow mainWindow, Version newVersion, string buildUrl, string buildChangelog) : base(builder.GetRawOwnedObject("UpdateDialog"))
         {
             builder.Autoconnect(this);
 
             _mainWindow = mainWindow;
             _buildUrl   = buildUrl;
+            _buildChangelog = buildChangelog;
 
             Icon = new Pixbuf(Assembly.GetAssembly(typeof(ConfigurationState)), "Ryujinx.Ui.Common.Resources.Logo_Ryujinx.png");
             MainText.Text       = "Do you want to update Ryujinx to the latest version?";
-            SecondaryText.Text  = $"{Program.Version} -> {newVersion}";
-            SecondaryText.Text += "Changelog:";
-            SecondaryText.Text += $"{changelog}";
+            SecondaryText.Text  = $"{Program.Version} -> {newVersion}\r\n";
+            SecondaryText.Text += "Changelog:\r\n";
+            SecondaryText.Text += $"{_buildChangelog}";
 
             ProgressBar.Hide();
 

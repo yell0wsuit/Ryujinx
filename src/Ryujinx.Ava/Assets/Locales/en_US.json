@@ -637,5 +637,6 @@
   "SettingsTabNetworkInterface": "Network Interface:",
   "NetworkInterfaceTooltip": "The network interface used for LAN features",
   "NetworkInterfaceDefault": "Default",
-  "PackagingShaders": "Packaging Shaders"
+  "PackagingShaders": "Packaging Shaders",
+  "RyujinxUpdaterChangelog": "Changelog:"
 }

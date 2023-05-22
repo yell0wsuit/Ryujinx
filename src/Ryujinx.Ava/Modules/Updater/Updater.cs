@@ -45,6 +45,7 @@ namespace Ryujinx.Modules
         private static long   _buildSize;
         private static bool   _updateSuccessful;
         private static bool   _running;
+        private static string _buildChangelog;
 
         private static readonly string[] WindowsDependencyDirs = Array.Empty<string>();
 
@@ -103,6 +104,7 @@ namespace Ryujinx.Modules
                 string  fetchedJson  = await jsonClient.GetStringAsync(buildInfoURL);
                 var fetched = JsonHelper.Deserialize(fetchedJson, SerializerContext.GithubReleasesJsonResponse);
                 _buildVer = fetched.Name;
+                _buildChangelog = fetched.Body; // Get changelog for the latest version
 
                 foreach (var asset in fetched.Assets)
                 {
@@ -214,13 +216,29 @@ namespace Ryujinx.Modules
                 }
             }
 
+            // Fetch changelog content
+            try
+            {
+                changelog = Version.Parse(_buildChangelog);
+            }
+            catch
+            {
+                Logger.Error?.Print(LogClass.Application, "Failed to get the changelog for the latest version.");
+
+                _running = false;
+
+                return;
+            }
+
             Dispatcher.UIThread.Post(async () =>
             {
                 // Show a message asking the user if they want to update
                 var shouldUpdate = await ContentDialogHelper.CreateChoiceDialog(
                     LocaleManager.Instance[LocaleKeys.RyujinxUpdater],
                     LocaleManager.Instance[LocaleKeys.RyujinxUpdaterMessage],
-                    $"{Program.Version} -> {newVersion}");
+                    $"{Program.Version} -> {newVersion}",
+                    LocaleManager.Instance[LocaleKeys.RyujinxUpdaterChangelog],
+                    $"{changelog}");
 
                 if (shouldUpdate)
                 {

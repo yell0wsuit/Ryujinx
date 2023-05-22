@@ -237,9 +237,7 @@ namespace Ryujinx.Modules
                 var shouldUpdate = await ContentDialogHelper.CreateChoiceDialog(
                     LocaleManager.Instance[LocaleKeys.RyujinxUpdater],
                     LocaleManager.Instance[LocaleKeys.RyujinxUpdaterMessage],
-                    $"{Program.Version} -> {newVersion}",
-                    LocaleManager.Instance[LocaleKeys.RyujinxUpdaterChangelog],
-                    $"{changelog}");
+                    $"{Program.Version} -> {newVersion} \r\n" + LocaleManager.Instance[LocaleKeys.RyujinxUpdaterChangelog] + "\r\n" + $"{changelog}");
 
                 if (shouldUpdate)
                 {

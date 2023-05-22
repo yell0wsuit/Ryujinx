@@ -74,6 +74,7 @@ namespace Ryujinx.Modules
 
             Version newVersion;
             Version currentVersion;
+            Version changelog;
 
             try
             {

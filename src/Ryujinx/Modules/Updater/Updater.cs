@@ -37,6 +37,7 @@ namespace Ryujinx.Modules
         private static string _platformExt;
         private static string _buildUrl;
         private static long   _buildSize;
+        private static string _buildChangelog;
 
         private static readonly GithubReleasesJsonSerializerContext SerializerContext = new(JsonHelper.GetDefaultSerializerOptions());
 
@@ -111,6 +112,7 @@ namespace Ryujinx.Modules
                 string  fetchedJson = await jsonClient.GetStringAsync(buildInfoURL);
                 var fetched = JsonHelper.Deserialize(fetchedJson, SerializerContext.GithubReleasesJsonResponse);
                 _buildVer = fetched.Name;
+                _buildChangelog = fetched.Body; // Get changelog
 
                 foreach (var asset in fetched.Assets)
                 {
@@ -193,6 +195,18 @@ namespace Ryujinx.Modules
 
                     _buildSize = -1;
                 }
+            }
+            
+            // Get changelog
+            try
+            {
+                changelog = Version.Parse(_buildChangelog);
+            }
+            catch
+            {
+                Logger.Error?.Print(LogClass.Application, "Failed to get the changelog for the latest release.");
+
+                return;
             }
 
             // Show a message asking the user if they want to update

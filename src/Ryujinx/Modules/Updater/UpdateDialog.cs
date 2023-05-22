@@ -34,8 +34,10 @@ namespace Ryujinx.Modules
             _buildUrl   = buildUrl;
 
             Icon = new Pixbuf(Assembly.GetAssembly(typeof(ConfigurationState)), "Ryujinx.Ui.Common.Resources.Logo_Ryujinx.png");
-            MainText.Text      = "Do you want to update Ryujinx to the latest version?";
-            SecondaryText.Text = $"{Program.Version} -> {newVersion}";
+            MainText.Text       = "Do you want to update Ryujinx to the latest version?";
+            SecondaryText.Text  = $"{Program.Version} -> {newVersion}";
+            SecondaryText.Text += "Changelog:";
+            SecondaryText.Text += $"{changelog}";
 
             ProgressBar.Hide();
 

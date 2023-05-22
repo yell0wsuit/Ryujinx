@@ -211,7 +211,7 @@ namespace Ryujinx.Modules
             }
 
             // Show a message asking the user if they want to update
-            UpdateDialog updateDialog = new UpdateDialog(mainWindow, newVersion, _buildUrl);
+            UpdateDialog updateDialog = new UpdateDialog(mainWindow, newVersion, changelog, _buildUrl);
             updateDialog.Show();
         }
 

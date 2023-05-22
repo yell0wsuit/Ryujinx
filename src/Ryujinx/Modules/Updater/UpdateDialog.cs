@@ -26,7 +26,7 @@ namespace Ryujinx.Modules
 
         public UpdateDialog(MainWindow mainWindow, Version newVersion, Version changelog, string buildUrl) : this(new Builder("Ryujinx.Modules.Updater.UpdateDialog.glade"), mainWindow, newVersion, buildUrl) { }
 
-        private UpdateDialog(Builder builder, MainWindow mainWindow, Version newVersion, string buildUrl) : base(builder.GetRawOwnedObject("UpdateDialog"))
+        private UpdateDialog(Builder builder, MainWindow mainWindow, Version newVersion, Version changelog, string buildUrl) : base(builder.GetRawOwnedObject("UpdateDialog"))
         {
             builder.Autoconnect(this);
 

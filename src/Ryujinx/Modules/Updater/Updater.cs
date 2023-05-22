@@ -178,6 +178,18 @@ namespace Ryujinx.Modules
                 return;
             }
 
+            // Get changelog
+            try
+            {
+                changelog = Version.Parse(_buildChangelog);
+            }
+            catch
+            {
+                Logger.Error?.Print(LogClass.Application, "Failed to get the changelog for the latest release.");
+
+                return;
+            }
+
             // Fetch build size information to learn chunk sizes.
             using (HttpClient buildSizeClient = ConstructHttpClient())
             {
@@ -196,18 +208,6 @@ namespace Ryujinx.Modules
 
                     _buildSize = -1;
                 }
-            }
-            
-            // Get changelog
-            try
-            {
-                changelog = Version.Parse(_buildChangelog);
-            }
-            catch
-            {
-                Logger.Error?.Print(LogClass.Application, "Failed to get the changelog for the latest release.");
-
-                return;
             }
 
             // Show a message asking the user if they want to update

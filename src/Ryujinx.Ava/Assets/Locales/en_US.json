@@ -638,5 +638,7 @@
   "NetworkInterfaceTooltip": "The network interface used for LAN features",
   "NetworkInterfaceDefault": "Default",
   "PackagingShaders": "Packaging Shaders",
+  "AboutChangelogButton": "View Changelog on GitHub",
+  "AboutChangelogButtonTooltipMessage": "Click to open the changelog for this version in your default browser.",
   "RyujinxUpdaterChangelog": "Changelog:"
 }

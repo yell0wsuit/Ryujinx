@@ -26,9 +26,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Cache .NET packages
+        uses: actions/cache@v4.0.2
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
       - uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
+
+      - name: Cache .NET build
+        uses: actions/cache@v4.0.2
+        with:
+          path: |
+            **/bin
+            **/obj
+          key: ${{ runner.os }}-dotnet-build-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-dotnet-build-
 
       - name: Overwrite csc problem matcher
         run: echo "::add-matcher::.github/csc.json"
@@ -110,9 +128,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Cache .NET packages
+        uses: actions/cache@v4.0.2
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
       - uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
+
+      - name: Cache .NET build
+        uses: actions/cache@v4.0.2
+        with:
+          path: |
+            **/bin
+            **/obj
+          key: ${{ runner.os }}-dotnet-build-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-dotnet-build-
 
       - name: Setup LLVM 14
         run: |
